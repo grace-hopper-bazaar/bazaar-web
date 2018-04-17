@@ -5,11 +5,11 @@ export default function SingleProductListing(props) {
   return (
     <div>
       <div>
-        <img src={product.imageUrl} />
+        <img src={product.image} />
         <h5>{product.title}</h5>
         <p>{product.description}</p>
         <p>Price: {product.price}</p>
-        <p>Star Rating: {product.rating}</p>
+        {/* <p>Star Rating: {product.rating}</p> */}
       </div>
       <div>
         <div>
