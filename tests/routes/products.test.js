@@ -7,7 +7,7 @@ const app = require('../server')
 const agent = supertest.agent(app)
 
 // const seed = require('./test-seed')
-// const { Product } = require('../server/db/models')
+const { Product } = require('../../server/db')
 
 describe('Product Routes', () => {
   beforeEach(async () => {
