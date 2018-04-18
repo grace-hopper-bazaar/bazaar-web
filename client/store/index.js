@@ -5,6 +5,8 @@ import axios from 'axios'
 import history from '../history'
 import user from './user'
 
+// TODO EVALUATE THE USE OF COMBINED REDUCERS
+
 const reducer = combineReducers({user})
 
 const store = createStore(
