@@ -61,9 +61,9 @@ const seed = async () => {
 	console.log(`seeded ${categories.length} categories: `);
 	console.log(`seeded successfully`);
 
-	await hazelnut.setCategory(dark);
-	await lavender.setCategory(milk);
-	await king.setCategory(white);
+	await hazelnut.addCategory(dark);
+	await lavender.addCategory(milk);
+	await king.addCategory(white);
 
 	console.log(`relationships created`);
 };

@@ -4,8 +4,8 @@ const Product = require('./product');
 const Category = require('./category');
 
 // associations go here!
-Product.belongsTo(Category);
-Category.hasMany(Product);
+Product.belongsToMany(Category, { through: 'productCategories' });
+Category.belongsToMany(Product, { through: 'productCategories' });
 
 module.exports = {
 	db,
