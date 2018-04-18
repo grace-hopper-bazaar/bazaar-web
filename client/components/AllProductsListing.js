@@ -1,54 +1,33 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import SingleProductListing from "./SingleProductListing"
-import axios from 'axios'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import SingleProductListing from './SingleProductListing'
+import { getAllProducts } from '../store/allProducts'
 
-export default class AllProductsListing extends Component {
-  constructor() {
-    super()
-    this.state = {
-      products: []
-    }
-  }
-  
-  async componentDidMount () {
-    // this.props.getAllProducts()
-    const {data} = await axios.get('/api/products')
-     this.setState({
-       products: data
-     }) 
-   
-  } 
+class AllProductsListing extends Component {
+	async componentDidMount() {
+		await this.props.getAllProducts()
+	}
 
-  render() {
-    //const products = this.props.products
-    console.log(this.state.products)
-    const products = this.state.products
-    return (
-      <div>
-        {
-          products.map(product => (
-            <SingleProductListing key={product.id} product={product} />
-          ))
-        }
-
-    </div>
-    )
-
-  }
+	render() {
+		const products = this.props.products
+		return (
+			<div>
+				{products.map(product => (
+					<SingleProductListing key={product.id} product={product} />
+				))}
+			</div>
+		)
+	}
 }
 
-/* const mapStateToProps = (state) => (
-  {
-    products: state.products
-  }
+const mapStateToProps = ({ products }) => ({ products })
+
+const mapDispatchToProps = dispatch => ({
+	getAllProducts: () => dispatch(getAllProducts())
+})
+
+const ConnectedAllProducts = connect(mapStateToProps, mapDispatchToProps)(
+	AllProductsListing
 )
 
-const mapDispatchToProps = (dispatch) => (
-  {
-    getAllProducts: () => dispatch(getAllProducts())
-  }
-)
-
-const ConnectedAllProducts = connect(mapStateToProps, mapDispatchToProps)(AllProductsListing);
- */
+export default ConnectedAllProducts
