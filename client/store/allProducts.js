@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 
 // ACTION TYPES
@@ -19,6 +20,7 @@ export const gotAllProducts = products => {
 
 // THUNK CREATORS
 
+// TODO USE AXIOS FROM THE THUNK***************
 export const getAllProducts = () => {
 	return async dispatch => {
 		try {
@@ -26,6 +28,11 @@ export const getAllProducts = () => {
 			const products = res.data
 			dispatch(gotAllProducts(products))
 		} catch (error) {
+			// TODO
+			// ADD SHOWING THE END USER THE CUSTOMIZED ERROR AND CODE*********
+			// plug history into action creator and redirect user to a component******
+			// OR add an error message action creator in reducer*********
+
 			console.error('Could not get products. ', error)
 		}
 	}
