@@ -1,40 +1,29 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import SingleProductListing from "./SingleProductListing";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import SingleProductListing from "./SingleProductListing"
+import axios from 'axios'
 
 export default class AllProductsListing extends Component {
-  /*   componentDidMount () {
-    this.props.getAllProducts()
-  } */
+  constructor() {
+    super()
+    this.state = {
+      products: []
+    }
+  }
+  
+  async componentDidMount () {
+    // this.props.getAllProducts()
+    const {data} = await axios.get('/api/products')
+     this.setState({
+       products: data
+     }) 
+   
+  } 
 
   render() {
     //const products = this.props.products
-    const products = [
-      {
-        id: 1,
-        title: 'Product Name1',
-        description: 'Product Description',
-        price: 25,
-        rating: 5,
-        imageUrl: 'https://i.imgur.com/r1Tji2T.jpg'
-      },
-      {
-        id: 2,
-        title: 'Product Name2',
-        description: 'Product Description',
-        price: 25,
-        rating: 5,
-        imageUrl: 'https://i.imgur.com/r1Tji2T.jpg'
-      },
-      {
-        id: 3,
-        title: 'Product Name3',
-        description: 'Product Description',
-        price: 25,
-        rating: 5,
-        imageUrl: 'https://i.imgur.com/r1Tji2T.jpg'
-      }
-    ]
+    console.log(this.state.products)
+    const products = this.state.products
     return (
       <div>
         {
