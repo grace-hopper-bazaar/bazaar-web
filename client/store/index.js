@@ -5,8 +5,9 @@ import axios from 'axios'
 import history from '../history'
 import user from './user'
 import products from './allProducts'
+import selectedProduct from './selectedProduct'
 
-const reducer = combineReducers({ user, products })
+const reducer = combineReducers({ user, products, selectedProduct })
 
 const store = createStore(
 	reducer,

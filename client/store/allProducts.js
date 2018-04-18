@@ -32,7 +32,7 @@ export const getAllProducts = () => {
 
 // REDUCER
 
-export default function reducer(state = initialProducts, action) {
+export default (state = initialProducts, action) => {
 	switch (action.type) {
 		case GOT_ALL_PRODUCTS:
 			return action.products
