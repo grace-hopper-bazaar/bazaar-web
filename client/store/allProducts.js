@@ -1,6 +1,3 @@
-
-import axios from 'axios'
-
 // ACTION TYPES
 
 const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
@@ -20,19 +17,14 @@ export const gotAllProducts = products => {
 
 // THUNK CREATORS
 
-// TODO USE AXIOS FROM THE THUNK***************
 export const getAllProducts = () => {
-	return async dispatch => {
+	return async (dispatch, _, { axios, history }) => {
 		try {
 			const res = await axios.get('/api/products')
 			const products = res.data
 			dispatch(gotAllProducts(products))
 		} catch (error) {
-			// TODO
-			// ADD SHOWING THE END USER THE CUSTOMIZED ERROR AND CODE*********
-			// plug history into action creator and redirect user to a component******
-			// OR add an error message action creator in reducer*********
-
+			history.push('/no-products')
 			console.error('Could not get products. ', error)
 		}
 	}
@@ -40,7 +32,7 @@ export const getAllProducts = () => {
 
 // REDUCER
 
-export default function reducer(state = initialProducts, action) {
+export default (state = initialProducts, action) => {
 	switch (action.type) {
 		case GOT_ALL_PRODUCTS:
 			return action.products
