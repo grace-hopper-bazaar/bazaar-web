@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import SingleProductListing from './SingleProductListing'
 import { getAllProducts } from '../store/allProducts'
-
+import Sidebar from './Sidebar'
 
 class AllProductsListing extends Component {
 	async componentDidMount() {
@@ -13,9 +13,12 @@ class AllProductsListing extends Component {
 		const products = this.props.products
 		return (
 			<div id="all-products-container">
-				{products.map(product => (
-					<SingleProductListing key={product.id} product={product} />
-				))}
+				<Sidebar />
+				<div>
+					{products.map(product => (
+						<SingleProductListing key={product.id} product={product} />
+					))}
+				</div>
 			</div>
 		)
 	}

@@ -4,7 +4,6 @@ import thunks from 'redux-thunk'
 import axios from 'axios'
 import history from '../history'
 import user from './user'
-
 import products from './allProducts'
 import selectedProduct from './selectedProduct'
 
