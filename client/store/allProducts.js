@@ -44,12 +44,12 @@ export default (state = initialProducts, action) => {
 	switch (action.type) {
 		case GOT_ALL_PRODUCTS:
 			return action.products
-		// case FILTER_PRODUCTS_BY_NAME: {
-		// 	const filteredProducts = state.filter(product =>
-		// 		product.title.includes(action.searchString)
-		// 	)
-		// 	return filteredProducts
-		// }
+		case FILTER_PRODUCTS_BY_NAME: {
+			const filteredProducts = state.filter(product =>
+				product.title.includes(action.searchString)
+			)
+			return filteredProducts
+		}
 		default:
 			return state
 	}
