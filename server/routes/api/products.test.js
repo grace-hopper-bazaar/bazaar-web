@@ -77,7 +77,9 @@ describe('User routes', () => {
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an('object')
-          for (let attr of 'title description price inventory image'.split()) {
+          for (let attr of 'title description price inventory image'.split(
+            ' '
+          )) {
             expect(res.body[attr]).to.equal(hazelnut[attr])
           }
         })
