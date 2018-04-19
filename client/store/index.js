@@ -4,10 +4,11 @@ import thunks from 'redux-thunk'
 import axios from 'axios'
 import history from '../history'
 import user from './user'
+import allProducts from './allProducts'
 
 // TODO EVALUATE THE USE OF COMBINED REDUCERS
 
-const reducer = combineReducers({user})
+const reducer = combineReducers({user, allProducts})
 
 const store = createStore(
   reducer,

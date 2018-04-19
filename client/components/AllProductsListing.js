@@ -10,15 +10,14 @@ export default class AllProductsListing extends Component {
       products: []
     }
   }
-  
+
   async componentDidMount () {
     // this.props.getAllProducts()
     const {data} = await axios.get('/api/products')
      this.setState({
        products: data
-     }) 
-   
-  } 
+     })
+  }
 
   render() {
     //const products = this.props.products
