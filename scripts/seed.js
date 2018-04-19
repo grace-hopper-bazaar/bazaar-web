@@ -46,21 +46,24 @@ const seed = async () => {
   const king = products[2]
 
   const reviewHazelnutTruffles1 = await Review.create({
-    content: 'Hazelnut is delicious. buy one!',
-    rating: 5,
-    productId: hazelnut.id
+    content: 'Hazelnuts rules, buy more!!!',
+    rating: 3,
+    productId: hazelnut.id,
+    userId: users[0].id
   })
 
   const reviewHazelnutTruffles2 = await Review.create({
-    content: 'Hazelnut is delicious. buy two!',
+    content: 'Hazelnuts rules, buy a lot more!!!',
     rating: 4,
-    productId: hazelnut.id
+    productId: hazelnut.id,
+    userId: users[0].id
   })
 
   const reviewHazelnutTruffles3 = await Review.create({
-    content: 'Hazelnut is delicious. buy three!',
-    rating: 3,
-    productId: hazelnut.id
+    content: 'Hazelnuts rules, buy many more!!!',
+    rating: 5,
+    productId: hazelnut.id,
+    userId: users[0].id
   })
 
   console.log(`seeded ${products.length} products: `)

@@ -11,6 +11,9 @@ Category.belongsToMany(Product, { through: 'productCategories' })
 Product.hasMany(Review, { as: 'reviews' })
 Review.belongsTo(Product)
 
+Review.belongsTo(User)
+User.hasMany(Review, { as: 'reviews' })
+
 module.exports = {
   db,
   User,

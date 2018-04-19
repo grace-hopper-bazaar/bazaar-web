@@ -7,7 +7,8 @@ const Review = db.define('review', {
     type: Sequelize.TEXT,
     allowNull: false,
     validate: {
-      notEmpty: true
+      notEmpty: true,
+      len: [25, 1024]
     }
   },
 
@@ -20,15 +21,13 @@ const Review = db.define('review', {
   }
 })
 
-// TODO: finish this!
 Review.afterCreate(async instance => {
   try {
-    console.log('AFTR SAVE')
     const reviews = await Review.findAll({
       where: { productId: instance.productId }
     })
 
-    const avg = await Review.findAll({
+    let avg = await Review.findAll({
       where: {
         productId: instance.productId
       },
@@ -37,13 +36,15 @@ Review.afterCreate(async instance => {
       ]
     })
 
-    console.log('AVG', avg[0].getDataValue('average_rating'))
-    console.log('AVG', avg[0].get('average_rating'))
+    avg = avg[0].getDataValue('average_rating')
+    avg = Math.floor(avg)
 
     const product = await Product.findById(instance.productId)
-    return product.update({ rating: avg.getDataValue('average_rating') })
+    return product.update({ rating: avg })
   } catch (error) {
-    console.log('BOOM: you fail', error)
+    console.group('Review.afterCreate')
+    console.log(error)
+    console.groupEnd()
   }
 })
 
