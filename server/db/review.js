@@ -23,10 +23,6 @@ const Review = db.define('review', {
 
 Review.afterCreate(async instance => {
   try {
-    const reviews = await Review.findAll({
-      where: { productId: instance.productId }
-    })
-
     let avg = await Review.findAll({
       where: {
         productId: instance.productId
