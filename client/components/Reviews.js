@@ -1,13 +1,23 @@
 import React from 'react';
+import StarRating from './StarRating';
 
 export default function Reviews(props) {
-  const reviews = props.reviews
-  if (reviews.length > 1) {
-    return (
-      <div className="container" id="single-product-container">
-      <h3>Reviews</h3>
-			{reviews.map( review => <p key={review.id}>{review.user.email}: {review.content} </p> )}
-		</div>
-    )
-  }
+	const reviews = props.reviews;
+	if (reviews.length > 1) {
+		return (
+			<div className="container">
+					<h3>Reviews</h3>
+					{reviews.map((review) => (
+						<div className="container" key={review.id}>
+							<div className="card row">
+								<StarRating rating={review.rating} />
+
+								<p>Date: {review.createdAt.slice(0, 10)}</p>
+								<p>{review.user.email}{' : '}{review.content} </p>{' '}
+							</div>
+						</div>
+					))}
+				</div>
+		);
+	}
 }

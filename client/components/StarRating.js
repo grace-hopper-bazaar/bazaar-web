@@ -6,6 +6,19 @@ export default function StarRating(props) {
 	stars.fill(1, 0, props.rating);
 	if (!props.rating) {
 		return <p className="card-body">No reviews yet</p>;
+	} else if (props.showReviewNumber) {
+		return (
+			<p className="card-body">
+			Rating:{' '}
+			{stars.map((star) => {
+				if (star === 1) {
+					return <span key={key++} className="fas fa-star" />;
+				} else {
+					return <span key={key++} className="far fa-star" />;
+				}
+			})} {' '}{props.reviews.length}{' reviews'}
+		</p>
+		)
 	} else {
 		return (
 			<p className="card-body">

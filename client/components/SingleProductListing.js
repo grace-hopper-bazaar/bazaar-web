@@ -13,7 +13,7 @@ export default function SingleProductListing(props) {
 				</NavLink>
 				<h5 className="card-title">{product.title}</h5>
 				<p className="card-body">{product.description}</p>
-				<StarRating rating={product.rating} />
+				<StarRating rating={product.rating} showReviewNumber={true} reviews={product.reviews} />
 				<div className="price-and-cart">
 					<div>
 						<p className="card-text">Price: {`$${product.price}.00`}</p>

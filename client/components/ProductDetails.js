@@ -21,10 +21,10 @@ class ProductDetails extends Component {
 					<button type="button" className="btn btn-default">
 						Add To Cart
 					</button>
-					<StarRating rating={product.rating} />
+					<StarRating rating={product.rating} showReviewNumber={true} reviews={product.reviews} />
 					<h3>Description</h3>
 					<p>{product.description}</p>
-					<Reviews reviews={product.reviews} />
+					<Reviews reviews={product.reviews} rating={product.rating} />
 				</div>
 			</div>
 		) : (
