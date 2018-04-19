@@ -16,6 +16,12 @@
 	align-content: space-between;
 }
 
+#all-products-container {
+	margin: 2% 5%;
+	display: flex;
+	flex-flow: column;
+}
+
 nav {
 	height: 80px;
 }
@@ -52,4 +58,13 @@ nav a:first-child:hover {
 
 .card-image-top {
 	height: 300px;
+}
+
+.card {
+	padding: 10px;
+}
+
+.price-and-cart {
+	display: flex;
+	width: 100%;
 }

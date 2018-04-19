@@ -11,7 +11,7 @@ class AllProductsListing extends Component {
 	render() {
 		const products = this.props.products
 		return (
-			<div>
+			<div id="all-products-container">
 				{products.map(product => (
 					<SingleProductListing key={product.id} product={product} />
 				))}
