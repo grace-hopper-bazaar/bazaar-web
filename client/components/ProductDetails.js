@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getSelectedProduct } from '../store/selectedProduct'
+import StarRating from './StarRating'
+import Reviews from './Reviews'
 
 class ProductDetails extends Component {
 	componentDidMount() {
@@ -19,8 +21,10 @@ class ProductDetails extends Component {
 					<button type="button" className="btn btn-default">
 						Add To Cart
 					</button>
+					<StarRating rating={product.rating} />
 					<h3>Description</h3>
 					<p>{product.description}</p>
+					<Reviews reviews={product.reviews} />
 				</div>
 			</div>
 		) : (
