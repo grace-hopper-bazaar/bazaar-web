@@ -1,8 +1,10 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import StarRating from './StarRating';
 
 export default function SingleProductListing(props) {
-	const product = props.product
+	const product = props.product;
+
 	return (
 		<div className="container" id="single-product-container">
 			<div className="card row">
@@ -11,7 +13,7 @@ export default function SingleProductListing(props) {
 				</NavLink>
 				<h5 className="card-title">{product.title}</h5>
 				<p className="card-body">{product.description}</p>
-				{/* <p>Star Rating: {product.rating}</p> */}
+				<StarRating rating={product.rating} />
 				<div className="price-and-cart">
 					<div>
 						<p className="card-text">Price: {`$${product.price}.00`}</p>
@@ -32,5 +34,5 @@ export default function SingleProductListing(props) {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
