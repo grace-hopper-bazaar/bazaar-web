@@ -7,7 +7,6 @@ router.get('/:id/reviews', async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id)
     const reviews = await product.getReviews()
-    console.log(reviews)
     res.json(reviews)
   } catch (err) {
     next(err)
