@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import SingleProductListing from './SingleProductListing'
 import { getAllProducts } from '../store/allProducts'
 
+
 class AllProductsListing extends Component {
 	async componentDidMount() {
 		await this.props.getAllProducts()

@@ -3,19 +3,15 @@ import { Link } from 'react-router-dom'
 import { AuthLink, Logout } from './auth'
 
 const Navbar = () => (
-	<div id="nav-container">
-		<nav className="row center-y">
-			<Link to="/">
-				<img id="logo" src="/favicon.ico" />
-			</Link>
-			<Link to="/login">Login</Link>
-			<Link to="/signup">Signup</Link>
-			<AuthLink to="/home">Home</AuthLink>
-			<AuthLink to="/">
-				<Logout />
-			</AuthLink>
-		</nav>
-	</div>
+  <div className="container-nav">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <Link to="/"><img id="logo" src="/favicon.ico" /></Link>
+      <Link to="/login">Login</Link>
+      <Link to="/signup">Signup</Link>
+      <AuthLink to="/home">Home</AuthLink>
+      <AuthLink to="/"><Logout /></AuthLink>
+    </nav>
+  </div>
 )
 
 export default Navbar
