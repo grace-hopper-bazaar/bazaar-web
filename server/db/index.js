@@ -4,6 +4,7 @@ const Product = require('./product')
 const Category = require('./category')
 const Review = require('./review')
 const Cart = require('./cart')
+const Lineitem = require('./lineitem.js')
 
 // associations go here!
 Product.belongsToMany(Category, { through: 'productCategories' })
@@ -16,10 +17,11 @@ Review.belongsTo(User)
 User.hasMany(Review, { as: 'reviews' })
 
 module.exports = {
-  db,
-  User,
-  Product,
+  Cart,
   Category,
+  Lineitem,
+  Product,
   Review,
-  Cart
+  User,
+  db
 }
