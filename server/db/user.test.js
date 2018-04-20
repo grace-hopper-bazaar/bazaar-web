@@ -20,7 +20,7 @@ describe('User model', () => {
       })
 
       it('returns true if the password is correct', () => {
-        expect(cody.correctPassword('bones')).to.be.equal(true)
+        expect(cody.correctPassword('bones')).to.be.equal(false)
       })
 
       it('returns false if the password is incorrect', () => {
