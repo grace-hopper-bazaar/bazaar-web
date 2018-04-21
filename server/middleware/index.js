@@ -4,4 +4,5 @@ module.exports = router
 router.use(require('./logging'))
 router.use(require('./body-parsing'))
 router.use(require('./session'))
+router.use(require('./cart-middleware'))
 router.use(require('./static'))
