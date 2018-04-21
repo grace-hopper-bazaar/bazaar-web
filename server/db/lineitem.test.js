@@ -22,7 +22,7 @@ describe('Lineitem model', () => {
       lineitem = await Lineitem.create(li)
     })
 
-    it.only('title', () => {
+    it('title', () => {
       expect(lineitem.title).to.equal(li.title)
     })
 
