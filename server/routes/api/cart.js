@@ -1,53 +1,57 @@
 const router = require('express').Router()
-const { Product, Category, Review, Cart } = require('../../db')
+const { Product, Category, Review, Cart, Lineitem } = require('../../db')
 module.exports = router
 
 ///api/cart
 
 // GET ALL PRODUCTS from Cart
-router.get('/', async (req, res, next) => {
+// return all items in a cart for
+// the cart associated with the current
+// session
+// GET /api/cart/items
+router.get('/items', async (req, res, next) => {
+  // our cart is in req.session.cartId
   try {
-    const products = await Cart.findAll()
-    res.json(products)
+    res.json({ status: 'unimplemented' })
   } catch (err) {
     next(err)
   }
 })
 
-// GET PRODUCTS from Cart by ID
-router.get('/:id', async (req, res, next) => {
+// Add a new item to Cart
+// POST /api/cart/items
+router.post('/items', async (req, res, next) => {
+  // our cart is in req.session.cartId
   try {
-    const products = await Cart.findById(req.params.id)
-    res.json(products)
+    const itemObj = { ...req.body }
+    itemObj.cartId = req.session.cartId
+
+    const newItem = await Lineitem.create(itemObj)
+
+    res.json(newItem)
   } catch (err) {
     next(err)
   }
 })
 
-//ADD TO CART
-router.post('/', async (req, res, next) => {
+// Add a new item to Cart
+// PUT /api/cart/items
+router.put('/items', async (req, res, next) => {
+  // our cart is in req.session.cartId
   try {
-    const cartProduct = await Cart.create({
-      title: req.body.title,
-      price: req.body.price,
-      quantity: req.body.quantity
-    })
-    res.json(cartProduct)
+    res.json({ status: 'unimplemented' })
   } catch (err) {
     next(err)
   }
 })
 
-//ADD TO CART
-router.delete('/:id', async (req, res, next) => {
+// DELETE an item from Cart
+// DELETE /api/cart/items
+router.delete('/items', async (req, res, next) => {
+  // our cart is in req.session.cartId
   try {
-    await Cart.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-    res.status(204).end()
-  } catch (error) {
-    next(error)
+    res.json({ status: 'unimplemented' })
+  } catch (err) {
+    next(err)
   }
 })
