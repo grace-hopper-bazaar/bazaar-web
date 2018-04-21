@@ -1,7 +1,7 @@
 /* eslint-env mocha,chai */
 
 const { expect } = require('chai')
-const { db, Lineitem } = require('./index')
+const { db, Cart, Lineitem } = require('./index')
 
 describe('Lineitem model', () => {
   beforeEach(() => {
@@ -17,6 +17,8 @@ describe('Lineitem model', () => {
     }
 
     beforeEach(async () => {
+      const cart = await Cart.create({})
+      li.cartId = cart.id
       lineitem = await Lineitem.create(li)
     })
 
