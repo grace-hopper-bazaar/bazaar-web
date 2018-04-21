@@ -21,10 +21,7 @@ const Lineitem = db.define('lineitem', {
 
   quantity: {
     type: Sequelize.INTEGER,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    defaultValue: 1
   }
 })
 

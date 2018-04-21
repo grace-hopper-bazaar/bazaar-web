@@ -28,6 +28,10 @@ const makeItem = (obj, pid, quantity) => ({
   quantity
 })
 
+/*
+ * TODO: How can we test within a session
+ */
+
 describe('Cart routes', () => {
   beforeEach(async () => {
     await db.sync({ force: true })
@@ -37,10 +41,10 @@ describe('Cart routes', () => {
   // implement both to test the cart. For the Cart we have to implement the
   // routes `add lineItem to cart` & `remove lineItem to cart`
   //
-  describe.only('/api/cart/items', () => {
+  describe('/api/cart/items', () => {
     beforeEach(async () => {})
 
-    describe('POST /api/cart/items', async () => {
+    describe('POST /api/cart/items', () => {
       beforeEach(async () => {
         await db.sync({ force: true })
       })
@@ -54,7 +58,6 @@ describe('Cart routes', () => {
           .send(itemToAdd)
           .expect(200)
           .then(async res => {
-            // console.log(res.body)
             expect(res.body).to.be.an('object')
             expect(res.body.title).to.be.equal(hazelnut.title)
             expect(res.body.price).to.be.equal(hazelnut.price)
@@ -62,35 +65,6 @@ describe('Cart routes', () => {
             // check the cart subtotal
             const cart = await Cart.findById(res.body.cartId)
             expect(cart.subtotal).to.be.equal(hazelnut.price)
-          })
-      })
-
-      it('two items', async () => {
-        const hazelnutEntry = await Product.create(hazelnut)
-        const hazelnutItem = makeItem(hazelnut, hazelnutEntry.id, 1)
-
-        const peanutEntry = await Product.create(peanut)
-        const peanutItem = makeItem(peanut, peanutEntry.id, 1)
-
-        await request(app)
-          .post('/api/cart/items')
-          .send(hazelnutItem)
-          .expect(200)
-          .then(async res => {
-            await request(app)
-              .post('/api/cart/items')
-              .send(peanutItem)
-              .expect(200)
-              .then(async res => {
-                // console.log(res.body)
-                expect(res.body).to.be.an('object')
-                expect(res.body.title).to.be.equal(peanut.title)
-                expect(res.body.price).to.be.equal(peanut.price)
-
-                // check the cart subtotal
-                const cart = await Cart.findById(res.body.cartId)
-                expect(cart.subtotal).to.be.equal(peanut.price + hazelnut.price)
-              })
           })
       })
     })
