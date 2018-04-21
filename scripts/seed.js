@@ -87,14 +87,6 @@ const seed = async () => {
   await king.addCategory(white)
 
   console.log(`relationships created`)
-
-  const cart = await Cart.bulkCreate([
-    { title: 'Dark Chocolate', price: 50, quantity: 1 },
-    { title: 'Lavender Squares', price: 25, quantity: 1 },
-    { title: `The King's Truffles`, price: 75, quantity: 1 }
-  ])
-
-  console.log(`seeded ${cart.length} cart item(s): `)
   console.log(`seeded successfully`)
 }
 
