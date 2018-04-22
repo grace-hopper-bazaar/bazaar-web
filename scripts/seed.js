@@ -39,11 +39,18 @@ const seed = async () => {
       price: 25.0,
       inventory: 100,
       image: 'whiteChocolateTruffles.jpg'
+    }),
+    Product.create({
+      title: 'Just Chocolate',
+      description: "It's just chocolate. Not everything has to be fancy!",
+      price: 10.0,
+      inventory: 100
     })
   ])
   const hazelnut = products[0]
   const lavender = products[1]
   const king = products[2]
+  const choc = products[3]
 
   const reviewHazelnutTruffles1 = await Review.create({
     content: 'Hazelnuts rules, buy more!!!',
@@ -85,6 +92,9 @@ const seed = async () => {
   await hazelnut.addCategory(dark)
   await lavender.addCategory(milk)
   await king.addCategory(white)
+  await choc.addCategory(white)
+  await choc.addCategory(milk)
+  await choc.addCategory(dark)
 
   console.log(`relationships created`)
 }
