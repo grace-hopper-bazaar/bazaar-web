@@ -1,33 +1,36 @@
 const router = require('express').Router()
-const { Product, Category, Review, Cart, Lineitem } = require('../../db')
+const { Product, Cart, Lineitem } = require('../../db')
 module.exports = router
 
-///api/cart
-
-// GET ALL PRODUCTS from Cart
-// return all items in a cart for
-// the cart associated with the current
-// session
+// Return all items in cart associated with the current session
 // GET /api/cart/items
 router.get('/items', async (req, res, next) => {
-  // our cart is in req.session.cartId
   try {
-    res.json({ status: 'unimplemented' })
+    const cart = await Cart.findAll({
+      where: { id: req.session.cartId },
+      include: [{ all: true }]
+    })
+    res.json(cart)
   } catch (err) {
     next(err)
   }
 })
 
 // Add a new item to Cart
-// POST /api/cart/items
+// body: { quantity, productId }
 router.post('/items', async (req, res, next) => {
   // our cart is in req.session.cartId
   try {
-    const itemObj = { ...req.body }
-    itemObj.cartId = req.session.cartId
+    const product = await Product.findById(req.body.productId)
+    const itemObj = {
+      cartId: req.session.cartId,
+      price: product.price,
+      productId: product.id,
+      quantity: req.body.quantity,
+      title: product.title
+    }
 
     const newItem = await Lineitem.create(itemObj)
-
     res.json(newItem)
   } catch (err) {
     next(err)
@@ -35,7 +38,7 @@ router.post('/items', async (req, res, next) => {
 })
 
 // Modify a cart item
-// PUT /api/cart/items/:id/changeQuantity
+// body: { quantity }
 router.put('/items/:id/changeQuantity', async (req, res, next) => {
   // our cart is in req.session.cartId
   // this should modify an item `id` IFF it is associated
@@ -56,8 +59,6 @@ router.put('/items/:id/changeQuantity', async (req, res, next) => {
   }
 })
 
-// DELETE an item from Cart
-// DELETE /api/cart/items/:id
 router.delete('/items/:id', async (req, res, next) => {
   // our cart is in req.session.cartId
   try {
