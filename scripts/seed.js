@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { db, User, Product, Review, Category } = require('../server/db')
+const { db, User, Product, Review, Category, Cart } = require('../server/db')
 
 const seed = async () => {
   await db.sync({ force: true })
@@ -87,6 +87,7 @@ const seed = async () => {
   await king.addCategory(white)
 
   console.log(`relationships created`)
+  console.log(`seeded successfully`)
 }
 
 seed()
