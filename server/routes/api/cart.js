@@ -21,6 +21,8 @@ router.get('/items', async (req, res, next) => {
 router.post('/items', async (req, res, next) => {
   // our cart is in req.session.cartId
   try {
+    // Extract title, price from productId.
+    //
     const product = await Product.findById(req.body.productId)
     const itemObj = {
       cartId: req.session.cartId,
@@ -49,8 +51,8 @@ router.put('/items/:id/changeQuantity', async (req, res, next) => {
     const quantity = req.body.quantity
     let li = await Lineitem.findById(lid)
 
-    // is the line item associated with the correct cartId?
-    if (li.cartId !== req.session.cartId) return res.sendStatus(404)
+    // does the lineitem exist AND is it associated with the correct cartId?
+    if (!li || li.cartId !== req.session.cartId) return res.sendStatus(404)
 
     li = await li.update({ quantity })
     res.json(li)
@@ -65,8 +67,8 @@ router.delete('/items/:id', async (req, res, next) => {
     const lid = req.params.id
     let li = await Lineitem.findById(lid)
 
-    // is the line item associated with the correct cartId?
-    if (li.cartId !== req.session.cartId) return res.sendStatus(404)
+    // does the lineitem exist AND is it associated with the correct cartId?
+    if (!li || li.cartId !== req.session.cartId) return res.sendStatus(404)
 
     li = await li.destroy()
     res.sendStatus(204)
