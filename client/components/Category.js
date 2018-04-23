@@ -14,6 +14,11 @@ class Category extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
   }
+
+  async componentDidMount() {
+    await this.setState({ category: this.props.filters.category })
+  }
+
   /* Using event.persist() makes this code work, but why doesn't it work without it? */
   async handleChange(event) {
     event.persist()
@@ -48,7 +53,6 @@ class Category extends Component {
           <input
             className="form-check-input"
             type="checkbox"
-            value=""
             id="defaultCheck2"
             name="Dark Chocolate"
             checked={this.state.category['Dark Chocolate']}
@@ -60,7 +64,6 @@ class Category extends Component {
           <input
             className="form-check-input"
             type="checkbox"
-            value=""
             id="defaultCheck3"
             name="White Chocolate"
             checked={this.state.category['White Chocolate']}

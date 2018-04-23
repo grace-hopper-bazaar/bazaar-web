@@ -9,6 +9,10 @@ class Price extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  componentDidMount() {
+    this.setState({ price: this.props.filters.price })
+  }
+
   async handleChange(event) {
     event.persist()
     await this.setState({ price: event.target.valueAsNumber })
