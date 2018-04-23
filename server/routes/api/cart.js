@@ -17,7 +17,7 @@ router.post('/items/checkout', async (req, res, next) => {
 // GET /api/cart/items
 router.get('/items', async (req, res, next) => {
   try {
-    const cart = await Cart.findAll({
+    const cart = await Cart.findOne({
       where: { id: req.session.cartId },
       include: [{ all: true }]
     })
