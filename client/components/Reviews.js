@@ -3,7 +3,7 @@ import StarRating from './StarRating';
 
 export default function Reviews(props) {
 	const reviews = props.reviews;
-	if (reviews.length > 1) {
+	if (reviews.length > 0) {
 		return (
 			<div className="container">
 					<h3>Reviews</h3>
@@ -19,5 +19,12 @@ export default function Reviews(props) {
 					))}
 				</div>
 		);
+	} else {
+		return (
+			<div className="container">
+					<h3>Reviews</h3>
+				<p>No reviews available</p>
+				</div>
+		)
 	}
 }

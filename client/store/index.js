@@ -7,8 +7,9 @@ import user from './user'
 import products from './allProducts'
 import selectedProduct from './selectedProduct'
 import filters from './filters'
+import cart from './allCart'
 
-const reducer = combineReducers({ user, products, selectedProduct, filters })
+const reducer = combineReducers({ user, products, selectedProduct, filters, cart })
 
 const store = createStore(
 	reducer,
