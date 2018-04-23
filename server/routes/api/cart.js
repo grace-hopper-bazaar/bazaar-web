@@ -16,10 +16,8 @@ router.get('/items', async (req, res, next) => {
   }
 })
 
-// Add a new item to Cart
-// body: { quantity, productId }
 router.post('/items', async (req, res, next) => {
-  // our cart is in req.session.cartId
+  // body: { quantity, productId }
   try {
     // Extract title, price from productId.
     //
@@ -39,8 +37,6 @@ router.post('/items', async (req, res, next) => {
   }
 })
 
-// Modify a cart item
-// body: { quantity }
 router.put('/items/:id/changeQuantity', async (req, res, next) => {
   // our cart is in req.session.cartId
   // this should modify an item `id` IFF it is associated
