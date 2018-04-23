@@ -35,6 +35,7 @@ router.use(async (req, res, next) => {
     console.group('CartMiddleware')
     console.log(error)
     console.groupEnd()
+    return next(error)
   }
   next()
 })
