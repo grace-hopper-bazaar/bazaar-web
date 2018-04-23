@@ -1,43 +1,48 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addFilter, removeFilter } from '../store/filters'
+import { addFilter } from '../store/filters'
 
 class Price extends Component {
-	constructor() {
-		super()
-		this.state = { price: 0 }
-	}
+  constructor() {
+    super()
+    this.state = { price: 100 }
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-	render() {
-		return (
-			<form onSubmit={this.handleSubmit}>
-				<label htmlFor="filterByPrice">
-					<h5>Filter by Price</h5>
-				</label>
-				<input
-					type="text"
-					name="filterByPrice"
-					placeholder="Min Price"
-					onChange={this.handleChange}
-    />
-				<input
-					type="text"
-					name="filterByPrice"
-					placeholder="Max Price"
-					onChange={this.handleChange}
-				/>
-				<button className="btn btn-primary" type="submit">
-					Submit
-				</button>
-			</form>
-		)
-	}
+  async handleChange(event) {
+    event.persist()
+    await this.setState({ price: event.target.valueAsNumber })
+    this.props.addFilter('price', this.state.price)
+  }
+
+  render() {
+    return (
+      <form>
+        <label>
+          <h5>Filter by Price:</h5>
+          <h6>{`Up to $${this.state.price}`}</h6>
+        </label>
+        <div id="slider-div">
+          $1{' '}
+          <input
+            type="range"
+            name="price"
+            max="100"
+            min="0"
+            step="20"
+            onChange={this.handleChange}
+            value={this.state.price}
+          />{' '}
+          $100
+        </div>
+      </form>
+    )
+  }
 }
 
 const mapStateToProps = ({ filters }) => ({ filters })
 const mapDispatchToProps = dispatch => ({
-	addFilter: filter => dispatch(addFilter(filter)),
-	removeFilter: filter => dispatch(removeFilter(filter))
+  addFilter: (filterType, filter) => dispatch(addFilter(filterType, filter))
 })
 const ConnectedPrice = connect(mapStateToProps, mapDispatchToProps)(Price)
 

@@ -49,7 +49,7 @@ describe('Cart routes', () => {
         await db.sync({ force: true })
       })
 
-      it('one item', async () => {
+      it('can add one item', async () => {
         const product = await Product.create(hazelnut)
         const itemToAdd = makeItem(hazelnut, product.id, 1)
 
@@ -61,10 +61,6 @@ describe('Cart routes', () => {
             expect(res.body).to.be.an('object')
             expect(res.body.title).to.be.equal(hazelnut.title)
             expect(res.body.price).to.be.equal(hazelnut.price)
-
-            // check the cart subtotal
-            const cart = await Cart.findById(res.body.cartId)
-            expect(cart.subtotal).to.be.equal(hazelnut.price)
           })
       })
     })

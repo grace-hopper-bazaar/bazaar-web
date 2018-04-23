@@ -1,11 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('./database')
 
-const Cart = db.define('cart', {
-  subtotal: {
-    type: Sequelize.FLOAT,
-    defaultValue: 0
-  }
-})
+// Cart is only used to organize line-items
+const Cart = db.define('cart', {})
 
 module.exports = Cart
