@@ -1,7 +1,7 @@
 /* eslint-env mocha,chai */
 
 const { expect } = require('chai')
-const { db, Cart, Lineitem, Order, Product, User } = require('./index')
+const { db, Cart, Lineitem, Order, Product } = require('./index')
 
 const hazelnut = {
   title: 'Hazelnut Truffles',
@@ -21,22 +21,22 @@ const peanut = {
   image: 'hazelnutTruffles.jpg'
 }
 
-describe('Order model', () => {
+describe.only('Order model', () => {
   let anOrder
-  let user
   let liHazelnut, liPeanut
+  const anEmail = 'cody@email.com'
+  const anAddress = '22 Acacia avenue'
 
   beforeEach(async () => {
     await db.sync({ force: true })
-    user = await User.create({
-      email: 'cody@puppybook.com',
-      password: 'bones'
-    })
 
     const h = await Product.create(hazelnut)
     const p = await Product.create(peanut)
     const cart = await Cart.create({})
-    const order = await Order.create({ userId: user.id })
+    const order = await Order.create({
+      email: anEmail,
+      shippingAddress: anAddress
+    })
 
     liHazelnut = await Lineitem.create({
       ...hazelnut,
@@ -50,7 +50,7 @@ describe('Order model', () => {
     })
 
     anOrder = await Order.findAll({
-      where: { userId: user.id },
+      where: { email: anEmail, shippingAddress: anAddress },
       include: [{ all: true }]
     })
     anOrder = anOrder[0]
@@ -60,7 +60,11 @@ describe('Order model', () => {
     expect(anOrder.lineitems.length).to.be.equal(2)
   })
 
-  it('is related to a user', async () => {
-    expect(anOrder.user.email).to.be.equal(user.email)
+  it('has an email', async () => {
+    expect(anOrder.email).to.be.equal(anEmail)
+  })
+
+  it('has an address', async () => {
+    expect(anOrder.shippingAddress).to.be.equal(anAddress)
   })
 })

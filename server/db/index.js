@@ -21,8 +21,7 @@ Cart.hasMany(Lineitem)
 Lineitem.belongsTo(Cart)
 
 Order.hasMany(Lineitem)
-Lineitem.belongsTo(Cart)
-Order.belongsTo(User)
+Lineitem.belongsTo(Order)
 
 Lineitem.belongsTo(Product)
 Product.hasMany(Lineitem)

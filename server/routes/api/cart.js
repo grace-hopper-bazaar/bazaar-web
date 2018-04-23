@@ -2,6 +2,17 @@ const router = require('express').Router()
 const { Product, Cart, Lineitem } = require('../../db')
 module.exports = router
 
+router.post('/items/checkout', async (req, res, next) => {
+  // session: has user & cartId
+  // body has: email and shipping info
+  // This user wants to checkout the items in this cart!
+  // 1. an order is created: user
+  //    for each litemitem in cart -> associate with new order
+  // 2. delete current cart. (todo: verify lineitems nolong reference deleted
+  //    cart)
+  // 3. send confirmation email and return new order result to front end
+})
+
 // Return all items in cart associated with the current session
 // GET /api/cart/items
 router.get('/items', async (req, res, next) => {
