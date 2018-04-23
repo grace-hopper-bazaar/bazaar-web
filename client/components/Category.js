@@ -20,14 +20,13 @@ class Category extends Component {
   }
 
   handleChange(event) {
-    const target = event.target
-    const value = target.checked
-    const name = target.name
     const oldState = this.state.category
-
-    this.setState({ category: { ...oldState, [name]: value } }, state => {
-      return this.props.addFilter('category', state.category)
-    })
+    this.setState(
+      { category: { ...oldState, [event.target.name]: event.target.checked } },
+      () => {
+        return this.props.addFilter('category', this.state.category)
+      }
+    )
   }
 
   render() {
