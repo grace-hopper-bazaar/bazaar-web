@@ -5,9 +5,14 @@ import { addFilter, removeFilter } from '../store/filters'
 class Search extends Component {
   constructor() {
     super()
-    this.state = { searchString: '' }
+    this.state = { searchString: 'Enter product name' }
     this.handleChange = this.handleChange.bind(this)
   }
+
+  async componentDidMount() {
+    await this.setState({ searchString: this.props.filters.searchString })
+  }
+
   async handleChange(event) {
     event.persist()
     await this.setState({
@@ -28,6 +33,7 @@ class Search extends Component {
           type="text"
           name="searchString"
           placeholder="Enter product name"
+          value={this.state.searchString}
           onChange={this.handleChange}
         />
       </form>
