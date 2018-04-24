@@ -1,12 +1,52 @@
 const router = require('express').Router()
-const { Product, Cart, Lineitem } = require('../../db')
+const { Product, Cart, Lineitem, Order } = require('../../db')
 module.exports = router
+
+router.post('/checkout', async (req, res, next) => {
+  // body: {email, shippingAddress}
+  try {
+    // validate cart
+    const cart = await Cart.findById(req.session.cartId)
+    if (!cart) return res.sendStatus(404)
+
+    const items = await Lineitem.findAll({
+      where: {
+        cartId: cart.id
+      }
+    })
+
+    let order = await Order.create(req.body)
+    const promises = items.map(async item => item.update({ orderId: order.id }))
+    const total = items.reduce(
+      (acc, item) => acc + item.quantity * item.price,
+      0.0
+    )
+    promises.push(order.update({ total }))
+    await Promise.all(promises)
+
+    await Cart.destroy({ where: { id: req.session.cartId } })
+    req.session.cartId = null
+
+    order = await Order.findOne({
+      where: { id: order.id },
+      include: [{ all: true }]
+    })
+
+    //TODO: send confirmation email
+
+    res.json(order)
+  } catch (error) {
+    console.group('Checkout')
+    console.log(error)
+    console.groupEnd()
+  }
+})
 
 // Return all items in cart associated with the current session
 // GET /api/cart/items
 router.get('/items', async (req, res, next) => {
   try {
-    const cart = await Cart.findAll({
+    const cart = await Cart.findOne({
       where: { id: req.session.cartId },
       include: [{ all: true }]
     })
@@ -16,10 +56,8 @@ router.get('/items', async (req, res, next) => {
   }
 })
 
-// Add a new item to Cart
-// body: { quantity, productId }
 router.post('/items', async (req, res, next) => {
-  // our cart is in req.session.cartId
+  // body: { quantity, productId }
   try {
     // Extract title, price from productId.
     //
@@ -39,8 +77,6 @@ router.post('/items', async (req, res, next) => {
   }
 })
 
-// Modify a cart item
-// body: { quantity }
 router.put('/items/:id/changeQuantity', async (req, res, next) => {
   // our cart is in req.session.cartId
   // this should modify an item `id` IFF it is associated
