@@ -21,7 +21,6 @@ export const getAllProducts = () => {
   return async (dispatch, _, { axios, history }) => {
     try {
       const res = await axios.get('/api/products')
-      console.log('*********res: ', res)
       const products = res.data || initialProducts
       dispatch(gotAllProducts(products))
     } catch (error) {

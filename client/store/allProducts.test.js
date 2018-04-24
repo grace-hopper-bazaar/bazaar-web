@@ -1,22 +1,13 @@
 import { expect } from 'chai'
 import { getAllProducts } from './allProducts'
-import axios from 'axios'
-import MockAdapter from 'axios-mock-adapter'
-import configureMockStore from 'redux-mock-store'
-import thunks from 'redux-thunk'
-import { createMemoryHistory } from 'history'
-
-const history = createMemoryHistory()
-const mockAxios = new MockAdapter(axios)
-const middlewares = [thunks.withExtraArgument({ axios, history })]
-const mockStore = configureMockStore(middlewares)
+import { mockStore, mockAxios, history } from './testConfig'
 
 describe('thunk creators', () => {
   let store
   const initialState = { products: [] }
 
   beforeEach(() => {
-    //mockAxios.reset()
+    mockAxios.reset()
     store = mockStore(initialState)
   })
 
