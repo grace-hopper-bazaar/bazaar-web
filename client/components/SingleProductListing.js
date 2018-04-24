@@ -4,7 +4,14 @@ import StarRating from './StarRating';
 
 export default function SingleProductListing(props) {
 	const product = props.product;
-
+	async function clickHandler (event) {
+		event.preventDefault()
+		const item = {
+			quantity: 1,
+			productId: product.id
+		}
+		await props.addCart(item)
+	}
 	return (
 		<div className="container" id="single-product-container">
 			<div className="card row">
@@ -26,7 +33,7 @@ export default function SingleProductListing(props) {
 							</button>
 						</NavLink>
 
-						<button type="button" className="btn btn-primary">
+						<button type="button" onClick={clickHandler} className="btn btn-primary">
 							{' '}
 							Add To Cart{' '}
 						</button>

@@ -1,15 +1,29 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { getSelectedProduct } from '../store/selectedProduct'
-import StarRating from './StarRating'
-import Reviews from './Reviews'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getSelectedProduct } from '../store/selectedProduct';
+import { addCart } from '../store/allCart';
+import StarRating from './StarRating';
+import Reviews from './Reviews';
 
 class ProductDetails extends Component {
+	constructor() {
+		super()
+		this.clickHandler = this.clickHandler.bind(this)
+	}
 	componentDidMount() {
-		this.props.getSelectedProduct(this.props.match.params.id)
+		this.props.getSelectedProduct(this.props.match.params.id);
+	}
+
+	async clickHandler(event) {
+		event.preventDefault();
+		const item = {
+			quantity: 1,
+			productId: this.props.selectedProduct.id
+		};
+		await this.props.addCart(item);
 	}
 	render() {
-		const product = this.props.selectedProduct
+		const product = this.props.selectedProduct;
 		return product.title ? (
 			<div id="product-details-container">
 				<div className="details-image">
@@ -18,7 +32,7 @@ class ProductDetails extends Component {
 				<div className="product-details">
 					<h1>{product.title}</h1>
 					<h3>{`$${product.price}.00`}</h3>
-					<button type="button" className="btn btn-default">
+					<button type="button" onClick={this.clickHandler} className="btn btn-default">
 						Add To Cart
 					</button>
 					<StarRating rating={product.rating} showReviewNumber={true} reviews={product.reviews} />
@@ -29,17 +43,18 @@ class ProductDetails extends Component {
 			</div>
 		) : (
 			<p>Loading...</p>
-		)
+		);
 	}
 }
 
-const mapStateToProps = ({ selectedProduct }) => ({ selectedProduct })
-const mapDispatchToProps = dispatch => {
-	return { getSelectedProduct: id => dispatch(getSelectedProduct(id)) }
-}
+const mapStateToProps = ({ selectedProduct }) => ({ selectedProduct });
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getSelectedProduct: (id) => dispatch(getSelectedProduct(id)),
+		addCart: (item) => dispatch(addCart(item))
+	};
+};
 
-const ConnectedProductDetails = connect(mapStateToProps, mapDispatchToProps)(
-	ProductDetails
-)
+const ConnectedProductDetails = connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
 
-export default ConnectedProductDetails
+export default ConnectedProductDetails;

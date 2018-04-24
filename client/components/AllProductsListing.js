@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import SingleProductListing from './SingleProductListing'
 import { getAllProducts } from '../store/allProducts'
 import Sidebar from './Sidebar'
+import { addCart } from '../store/allCart'
 
 class AllProductsListing extends Component {
   constructor() {
@@ -45,7 +46,7 @@ class AllProductsListing extends Component {
         <Sidebar />
         <div>
           {products.map(product => {
-            return <SingleProductListing key={product.id} product={product} />
+            return <SingleProductListing key={product.id} product={product} addCart={this.props.addCart} />
           })}
         </div>
       </div>
@@ -56,7 +57,8 @@ class AllProductsListing extends Component {
 const mapStateToProps = ({ products, filters }) => ({ products, filters })
 
 const mapDispatchToProps = dispatch => ({
-  getAllProducts: () => dispatch(getAllProducts())
+  getAllProducts: () => dispatch(getAllProducts()),
+  addCart: (item) => dispatch(addCart(item))
 })
 
 const ConnectedAllProducts = connect(mapStateToProps, mapDispatchToProps)(

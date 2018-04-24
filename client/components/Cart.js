@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllCart } from '../store/allCart';
+import { getAllCart, deleteCart } from '../store/allCart';
 import SingleCartListing from './SingleCartListing';
 import SubCartTotal from './SubCartTotal';
 
@@ -15,7 +15,7 @@ class Cart extends Component {
 				<h1>Shopping Cart</h1>
 				<div className="row">
 					<div className="col">
-						<SingleCartListing cart={cart} />
+						<SingleCartListing />
 					</div>
 					<div className="col">
 						<SubCartTotal cart={cart} />
@@ -29,7 +29,8 @@ class Cart extends Component {
 const mapStateToProps = ({ cart }) => ({ cart });
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getAllCart: () => dispatch(getAllCart())
+		getAllCart: () => dispatch(getAllCart()),
+		deleteCart: (id) => dispatch(deleteCart(id))
 	};
 };
 
