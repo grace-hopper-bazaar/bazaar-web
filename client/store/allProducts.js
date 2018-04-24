@@ -21,7 +21,8 @@ export const getAllProducts = () => {
   return async (dispatch, _, { axios, history }) => {
     try {
       const res = await axios.get('/api/products')
-      const products = res.data
+      console.log('*********res: ', res)
+      const products = res.data || initialProducts
       dispatch(gotAllProducts(products))
     } catch (error) {
       history.push('/no-products')
