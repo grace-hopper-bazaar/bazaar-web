@@ -13,5 +13,9 @@ module.exports = db.define('orders', {
     validate: {
       isEmail: true
     }
+  },
+  total: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0
   }
 })

@@ -21,9 +21,10 @@ const peanut = {
   image: 'hazelnutTruffles.jpg'
 }
 
-describe.only('Order model', () => {
+describe('Order model', () => {
   let anOrder
   let liHazelnut, liPeanut
+  const total = peanut.price + hazelnut.price
   const anEmail = 'cody@email.com'
   const anAddress = '22 Acacia avenue'
 
@@ -35,7 +36,8 @@ describe.only('Order model', () => {
     const cart = await Cart.create({})
     const order = await Order.create({
       email: anEmail,
-      shippingAddress: anAddress
+      shippingAddress: anAddress,
+      total: peanut.price + hazelnut.price
     })
 
     liHazelnut = await Lineitem.create({
@@ -66,5 +68,9 @@ describe.only('Order model', () => {
 
   it('has an address', async () => {
     expect(anOrder.shippingAddress).to.be.equal(anAddress)
+  })
+
+  it('has a total', async () => {
+    expect(anOrder.total).to.be.equal(total)
   })
 })

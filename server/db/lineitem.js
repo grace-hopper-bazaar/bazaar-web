@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('./database')
 const Cart = require('./cart')
+const Order = require('./order')
 
 const Lineitem = db.define('lineitem', {
   title: {

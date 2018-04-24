@@ -1,16 +1,45 @@
 const router = require('express').Router()
-const { Product, Cart, Lineitem } = require('../../db')
+const { Product, Cart, Lineitem, Order } = require('../../db')
 module.exports = router
 
-router.post('/items/checkout', async (req, res, next) => {
-  // session: has user & cartId
-  // body has: email and shipping info
-  // This user wants to checkout the items in this cart!
-  // 1. an order is created: user
-  //    for each litemitem in cart -> associate with new order
-  // 2. delete current cart. (todo: verify lineitems nolong reference deleted
-  //    cart)
-  // 3. send confirmation email and return new order result to front end
+router.post('/checkout', async (req, res, next) => {
+  // body: {email, shippingAddress}
+  try {
+    // validate cart
+    const cart = await Cart.findById(req.session.cartId)
+    if (!cart) return res.sendStatus(404)
+
+    const items = await Lineitem.findAll({
+      where: {
+        cartId: cart.id
+      }
+    })
+
+    let order = await Order.create(req.body)
+    const promises = items.map(async item => item.update({ orderId: order.id }))
+    const total = items.reduce(
+      (acc, item) => acc + item.quantity * item.price,
+      0.0
+    )
+    promises.push(order.update({ total }))
+    await Promise.all(promises)
+
+    await Cart.destroy({ where: { id: req.session.cartId } })
+    req.session.cartId = null
+
+    order = await Order.findOne({
+      where: { id: order.id },
+      include: [{ all: true }]
+    })
+
+    //TODO: send confirmation email
+
+    res.json(order)
+  } catch (error) {
+    console.group('Checkout')
+    console.log(error)
+    console.groupEnd()
+  }
 })
 
 // Return all items in cart associated with the current session

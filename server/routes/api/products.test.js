@@ -1,4 +1,5 @@
 /* eslint-env mocha,chai */
+/* eslint no-unused-expressions : 0 */
 
 const { expect } = require('chai')
 const request = require('supertest')
@@ -59,7 +60,12 @@ describe('User routes', () => {
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an('array')
-          expect(res.body[1].title).to.be.equal(hazelnut.title)
+          const titles = res.body.map(product => product.title)
+          expect(titles.some(title => title === hazelnut.title)).to.be.true
+          expect(titles.some(title => title === lavender.title)).to.be.true
+          expect(titles.some(title => title === king.title)).to.be.true
+          // expect(res.body[1].title).to.be.equal(lavender.title)
+          // expect(res.body[2].title).to.be.equal(king.title)
         })
     })
   }) // end describe('/api/products/:id')
