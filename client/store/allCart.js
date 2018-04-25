@@ -43,11 +43,11 @@ export const getAllCart = () => {
 	return async (dispatch, _, { axios, history }) => {
 		try {
 			const res = await axios.get('/api/cart/items');
-			const cart = res.data[0].lineitems;
+			const cart = res.data.lineitems;
 			dispatch(gotAllCart(cart));
 		} catch (error) {
 			history.push('/no-cart');
-			console.error('Could not get cart. ', error);
+			console.error('Could not getAll cart. ', error);
 		}
 	};
 };
@@ -56,7 +56,7 @@ export const addCart = (item, quant) => {
 	return async (dispatch, _, { axios, history }) => {
 		try {
 			const res = await axios.get('/api/cart/items');
-			const cart = res.data[0].lineitems;
+			const cart = res.data.lineitems;
 			if (cart.some((li) => li.productId === item.productId)) {
 				const { id, quantity } = cart.filter((li) => li.productId === item.productId)[0];
 
@@ -72,7 +72,7 @@ export const addCart = (item, quant) => {
 			}
 		} catch (error) {
 			history.push('/no-product');
-			console.error('Could not get cart. ', error);
+			console.error('Could not add cart. ', error);
 		}
 	};
 };
