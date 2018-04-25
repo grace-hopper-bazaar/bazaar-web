@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import StarRating from './StarRating'
 import { withAlert } from 'react-alert';
 
-export default function SingleProductListing(props) {
+function SingleProductListing(props) {
   const product = props.product
 async function clickHandler(event) {
 		event.preventDefault();
