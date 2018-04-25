@@ -13,10 +13,10 @@ class Price extends Component {
     this.setState({ price: this.props.filters.price })
   }
 
-  async handleChange(event) {
-    event.persist()
-    await this.setState({ price: event.target.valueAsNumber })
-    this.props.addFilter('price', this.state.price)
+  handleChange(event) {
+    this.setState({ price: event.target.valueAsNumber }, () => {
+      return this.props.addFilter('price', this.state.price)
+    })
   }
 
   render() {

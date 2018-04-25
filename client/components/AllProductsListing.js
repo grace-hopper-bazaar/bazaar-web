@@ -4,7 +4,7 @@ import SingleProductListing from './SingleProductListing'
 import { getAllProducts } from '../store/allProducts'
 import Sidebar from './Sidebar'
 
-class AllProductsListing extends Component {
+export class AllProductsListing extends Component {
   constructor() {
     super()
     this.filterProducts = this.filterProducts.bind(this)
@@ -40,7 +40,7 @@ class AllProductsListing extends Component {
 
   render() {
     const products = this.filterProducts()
-    return (
+    return products.length > 0 ? (
       <div id="all-products-container">
         <Sidebar />
         <div>
@@ -48,6 +48,11 @@ class AllProductsListing extends Component {
             return <SingleProductListing key={product.id} product={product} />
           })}
         </div>
+      </div>
+    ) : (
+      <div>
+        <Sidebar />
+        <p>No products found.</p>
       </div>
     )
   }

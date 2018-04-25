@@ -9,19 +9,23 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  async componentDidMount() {
-    await this.setState({ searchString: this.props.filters.searchString })
+  componentDidMount() {
+    this.setState({ searchString: this.props.filters.searchString })
   }
 
-  async handleChange(event) {
+  handleChange(event) {
     event.persist()
-    await this.setState({
-      [event.target.name]: event.target.value
-    })
-    if (!event.target.value) {
-      await this.props.removeFilter('searchString')
-    }
-    await this.props.addFilter('searchString', this.state.searchString)
+    this.setState(
+      {
+        [event.target.name]: event.target.value
+      },
+      () => {
+        if (!event.target.value) {
+          this.props.removeFilter('searchString')
+        }
+        this.props.addFilter('searchString', this.state.searchString)
+      }
+    )
   }
   render() {
     return (
