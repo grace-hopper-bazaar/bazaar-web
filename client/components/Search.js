@@ -30,11 +30,10 @@ class Search extends Component {
   render() {
     return (
       <form>
-        <label>
-          <h5>Search</h5>
-        </label>
+        <label className="col-form-label col-form-label-lg">Search</label>
         <input
           type="text"
+          className="form-control form-control-lg side-cont"
           name="searchString"
           placeholder="Enter product name"
           value={this.state.searchString}
