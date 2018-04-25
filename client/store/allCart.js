@@ -1,13 +1,13 @@
 // ACTION TYPES
 
 const GOT_ALL_CART = 'GOT_ALL_CART';
-const ADD_CART = 'ADD_CART'
-const DELETE_CART = 'DELETE_CART'
+const ADD_CART = 'ADD_CART';
+const DELETE_CART = 'DELETE_CART';
+const UPDATE_CART = 'UPDATE_CART';
 
 //INITIAL STATE
 
-const initialCart = []
-
+const initialCart = [];
 
 //ACTION CREATORS
 
@@ -31,13 +31,19 @@ export const deletedCart = (id) => {
 		id
 	};
 };
+export const updatedCart = (cart) => {
+	return {
+		type: UPDATE_CART,
+		cart
+	};
+};
 // THUNK CREATORS
 
 export const getAllCart = () => {
 	return async (dispatch, _, { axios, history }) => {
 		try {
 			const res = await axios.get('/api/cart/items');
-			const cart = res.data[0].lineitems
+			const cart = res.data[0].lineitems;
 			dispatch(gotAllCart(cart));
 		} catch (error) {
 			history.push('/no-cart');
@@ -46,12 +52,24 @@ export const getAllCart = () => {
 	};
 };
 
-export const addCart = (item) => {
+export const addCart = (item, quant) => {
 	return async (dispatch, _, { axios, history }) => {
 		try {
-		const {data} =	await axios.post('/api/cart/items', item);
-		const action = addedCart(data)
-		dispatch(action)
+			const res = await axios.get('/api/cart/items');
+			const cart = res.data[0].lineitems;
+			if (cart.some((li) => li.productId === item.productId)) {
+				const { id, quantity } = cart.filter((li) => li.productId === item.productId)[0];
+
+				const { data } = await axios.put(`/api/cart/items/${id}/changeQuantity`, {
+					quantity: quantity + quant
+				});
+				const action = updatedCart(data);
+				dispatch(action);
+			} else {
+				const { data } = await axios.post('/api/cart/items', item);
+				const action = addedCart(data);
+				dispatch(action);
+			}
 		} catch (error) {
 			history.push('/no-product');
 			console.error('Could not get cart. ', error);
@@ -63,8 +81,8 @@ export const deleteCart = (id) => {
 	return async (dispatch, _, { axios, history }) => {
 		try {
 			await axios.delete(`/api/cart/items/${id}`);
-			const action = deletedCart(id)
-			dispatch(action)
+			const action = deletedCart(id);
+			dispatch(action);
 		} catch (error) {
 			history.push('/no-product');
 			console.error('Could not get cart. ', error);
@@ -80,8 +98,16 @@ export default (state = initialCart, action) => {
 			return action.cart;
 		case ADD_CART:
 			return [...state, action.cart]
+		case UPDATE_CART:
+			return [ ...state ].map((item) => {
+				if (item.id === action.cart.id) {
+					return action.cart;
+				} else {
+					return item;
+				}
+			});
 		case DELETE_CART:
-			return [...state].filter(item => item.id !== action.id)
+			return [ ...state ].filter((item) => item.id !== Number(action.id));
 		default:
 			return state;
 	}

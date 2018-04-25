@@ -31,13 +31,8 @@ router.post('/items', async (req, res, next) => {
 			quantity: req.body.quantity,
 			title: product.title
 		};
-		let check = await Lineitem.findOne({where:{ productId: product.id, cartId: req.session.cartId}})
-		if (check) {
-			check.update({quantity: check.quantity + req.body.quantity})
-		} else {
 			const newItem = await Lineitem.create(itemObj);
 			res.json(newItem);
-		}
 	} catch (err) {
 		next(err);
 	}

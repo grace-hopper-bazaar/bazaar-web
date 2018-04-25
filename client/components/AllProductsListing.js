@@ -4,6 +4,8 @@ import SingleProductListing from './SingleProductListing'
 import { getAllProducts } from '../store/allProducts'
 import Sidebar from './Sidebar'
 import { addCart } from '../store/allCart'
+import { Provider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 class AllProductsListing extends Component {
   constructor() {
@@ -44,11 +46,13 @@ class AllProductsListing extends Component {
     return (
       <div id="all-products-container">
         <Sidebar />
+        <Provider template={AlertTemplate} >
         <div>
           {products.map(product => {
             return <SingleProductListing key={product.id} product={product} addCart={this.props.addCart} />
           })}
         </div>
+  </Provider>
       </div>
     )
   }
@@ -58,7 +62,7 @@ const mapStateToProps = ({ products, filters }) => ({ products, filters })
 
 const mapDispatchToProps = dispatch => ({
   getAllProducts: () => dispatch(getAllProducts()),
-  addCart: (item) => dispatch(addCart(item))
+  addCart: (item, quant) => dispatch(addCart(item, quant))
 })
 
 const ConnectedAllProducts = connect(mapStateToProps, mapDispatchToProps)(

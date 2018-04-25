@@ -20,7 +20,7 @@ class ProductDetails extends Component {
 			quantity: 1,
 			productId: this.props.selectedProduct.id
 		};
-		await this.props.addCart(item);
+		await this.props.addCart(item, 1);
 	}
 	render() {
 		const product = this.props.selectedProduct;
@@ -51,7 +51,7 @@ const mapStateToProps = ({ selectedProduct }) => ({ selectedProduct });
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getSelectedProduct: (id) => dispatch(getSelectedProduct(id)),
-		addCart: (item) => dispatch(addCart(item))
+		addCart: (item, quant) => dispatch(addCart(item, quant))
 	};
 };
 

@@ -1,16 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import StarRating from './StarRating';
+import { withAlert } from 'react-alert';
 
-export default function SingleProductListing(props) {
+function SingleProductListing(props) {
 	const product = props.product;
-	async function clickHandler (event) {
-		event.preventDefault()
+	async function clickHandler(event) {
+		event.preventDefault();
 		const item = {
 			quantity: 1,
 			productId: product.id
-		}
-		await props.addCart(item)
+		};
+		await props.addCart(item, 1);
+		props.alert.success('Added to cart!');
 	}
 	return (
 		<div className="container" id="single-product-container">
@@ -43,3 +45,5 @@ export default function SingleProductListing(props) {
 		</div>
 	);
 }
+
+export default withAlert(SingleProductListing);
