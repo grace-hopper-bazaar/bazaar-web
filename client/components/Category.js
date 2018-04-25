@@ -15,30 +15,27 @@ class Category extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  async componentDidMount() {
-    await this.setState({ category: this.props.filters.category })
+  componentDidMount() {
+    this.setState({ category: this.props.filters.category })
   }
 
-  /* Using event.persist() makes this code work, but why doesn't it work without it? */
-  async handleChange(event) {
-    event.persist()
-    const target = event.target
-    const value = target.checked
-    const name = target.name
+  handleChange(event) {
     const oldState = this.state.category
-
-    await this.setState({
-      category: { ...oldState, [name]: value }
-    })
-    this.props.addFilter('category', this.state.category)
+    this.setState(
+      { category: { ...oldState, [event.target.name]: event.target.checked } },
+      () => {
+        return this.props.addFilter('category', this.state.category)
+      }
+    )
   }
+
   render() {
     return (
       <form>
-        <label htmlFor="filterByCategory">
+        <label className="side-cont">
           <h5>Filter by Category</h5>
         </label>
-        <div className="form-check">
+        <div className="custom-control custom-checkbox side-cont">
           <input
             className="form-check-input"
             type="checkbox"
@@ -49,7 +46,7 @@ class Category extends Component {
           />
           <label className="form-check-label">Milk Chocolate</label>
         </div>
-        <div className="form-check">
+        <div className="custom-control custom-checkbox side-cont">
           <input
             className="form-check-input"
             type="checkbox"
@@ -60,7 +57,7 @@ class Category extends Component {
           />
           <label className="form-check-label">Dark Chocolate</label>
         </div>
-        <div className="form-check">
+        <div className="custom-control custom-checkbox side-cont">
           <input
             className="form-check-input"
             type="checkbox"

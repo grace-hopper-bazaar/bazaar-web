@@ -7,7 +7,7 @@ import { addCart } from '../store/allCart'
 import { Provider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 
-class AllProductsListing extends Component {
+export class AllProductsListing extends Component {
   constructor() {
     super()
     this.filterProducts = this.filterProducts.bind(this)
@@ -43,7 +43,7 @@ class AllProductsListing extends Component {
 
   render() {
     const products = this.filterProducts()
-    return (
+    return products.length > 0 ? (
       <div id="all-products-container">
         <Sidebar />
         <Provider template={AlertTemplate} >
@@ -53,6 +53,11 @@ class AllProductsListing extends Component {
           })}
         </div>
   </Provider>
+      </div>
+    ) : (
+      <div>
+        <Sidebar />
+        <p>No products found.</p>
       </div>
     )
   }

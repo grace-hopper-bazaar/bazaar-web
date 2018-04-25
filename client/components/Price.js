@@ -13,31 +13,32 @@ class Price extends Component {
     this.setState({ price: this.props.filters.price })
   }
 
-  async handleChange(event) {
-    event.persist()
-    await this.setState({ price: event.target.valueAsNumber })
-    this.props.addFilter('price', this.state.price)
+  handleChange(event) {
+    this.setState({ price: event.target.valueAsNumber }, () => {
+      return this.props.addFilter('price', this.state.price)
+    })
   }
 
   render() {
     return (
       <form>
-        <label>
+        <label className="side-cont">
           <h5>Filter by Price:</h5>
-          <h6>{`Up to $${this.state.price}`}</h6>
+          <h6 className="text-warning">{`Up to $${this.state.price}`}</h6>
         </label>
         <div id="slider-div">
-          $1{' '}
+          <h5>$</h5>
           <input
             type="range"
+            id="slider"
             name="price"
             max="100"
             min="0"
             step="20"
             onChange={this.handleChange}
             value={this.state.price}
-          />{' '}
-          $100
+          />
+          <h5>$$$$</h5>
         </div>
       </form>
     )

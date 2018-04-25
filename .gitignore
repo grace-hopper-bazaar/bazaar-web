@@ -4,5 +4,7 @@ package-lock.json
 public/bundle.js
 public/bundle.js.map
 secrets.js
+secrets.env
 npm-debug.log
 yarn-error.log
+secrets.env
