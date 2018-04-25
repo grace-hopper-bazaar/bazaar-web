@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { AuthLink, Logout } from './auth'
 import { connect } from 'react-redux'
 
+
+
+
 const Navbar = props => {
   console.log(props)
   return (
@@ -21,6 +24,7 @@ const Navbar = props => {
           ) : (
             <span>Welcome, {props.user.email}!</span>
           )}
+          <Link to="/cart">Cart</Link>
           <AuthLink to="/home">Home</AuthLink>
           <AuthLink to="/">
             <Logout />
@@ -30,6 +34,7 @@ const Navbar = props => {
     </div>
   )
 }
+
 
 const mapStateToProps = ({ user }) => ({ user })
 

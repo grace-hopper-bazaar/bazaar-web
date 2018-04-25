@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import SingleProductListing from './SingleProductListing'
 import { getAllProducts } from '../store/allProducts'
 import Sidebar from './Sidebar'
+import { addCart } from '../store/allCart'
+import { Provider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 export class AllProductsListing extends Component {
   constructor() {
@@ -43,11 +46,13 @@ export class AllProductsListing extends Component {
     return products.length > 0 ? (
       <div id="all-products-container">
         <Sidebar />
+        <Provider template={AlertTemplate} >
         <div>
           {products.map(product => {
-            return <SingleProductListing key={product.id} product={product} />
+            return <SingleProductListing key={product.id} product={product} addCart={this.props.addCart} />
           })}
         </div>
+  </Provider>
       </div>
     ) : (
       <div>
@@ -61,7 +66,8 @@ export class AllProductsListing extends Component {
 const mapStateToProps = ({ products, filters }) => ({ products, filters })
 
 const mapDispatchToProps = dispatch => ({
-  getAllProducts: () => dispatch(getAllProducts())
+  getAllProducts: () => dispatch(getAllProducts()),
+  addCart: (item, quant) => dispatch(addCart(item, quant))
 })
 
 const ConnectedAllProducts = connect(mapStateToProps, mapDispatchToProps)(

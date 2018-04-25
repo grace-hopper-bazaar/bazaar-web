@@ -1,3 +1,4 @@
+
 const router = require('express').Router()
 const { Product, Cart, Lineitem, Order } = require('../../db')
 module.exports = router
@@ -45,6 +46,7 @@ router.post('/checkout', async (req, res, next) => {
 // Return all items in cart associated with the current session
 // GET /api/cart/items
 router.get('/items', async (req, res, next) => {
+
   try {
     const cart = await Cart.findOne({
       where: { id: req.session.cartId },
@@ -57,6 +59,7 @@ router.get('/items', async (req, res, next) => {
 })
 
 router.post('/items', async (req, res, next) => {
+
   // body: { quantity, productId }
   try {
     // Extract title, price from productId.
@@ -78,37 +81,37 @@ router.post('/items', async (req, res, next) => {
 })
 
 router.put('/items/:id/changeQuantity', async (req, res, next) => {
-  // our cart is in req.session.cartId
-  // this should modify an item `id` IFF it is associated
-  // with our `cartId`
-  //
-  try {
-    const lid = req.params.id
-    const quantity = req.body.quantity
-    let li = await Lineitem.findById(lid)
+	// our cart is in req.session.cartId
+	// this should modify an item `id` IFF it is associated
+	// with our `cartId`
+	//
+	try {
+		const lid = req.params.id;
+		const quantity = req.body.quantity;
+		let li = await Lineitem.findById(lid);
 
-    // does the lineitem exist AND is it associated with the correct cartId?
-    if (!li || li.cartId !== req.session.cartId) return res.sendStatus(404)
+		// does the lineitem exist AND is it associated with the correct cartId?
+		if (!li || li.cartId !== req.session.cartId) return res.sendStatus(404);
 
-    li = await li.update({ quantity })
-    res.json(li)
-  } catch (err) {
-    next(err)
-  }
-})
+		li = await li.update({ quantity });
+		res.json(li);
+	} catch (err) {
+		next(err);
+	}
+});
 
 router.delete('/items/:id', async (req, res, next) => {
-  // our cart is in req.session.cartId
-  try {
-    const lid = req.params.id
-    let li = await Lineitem.findById(lid)
+	// our cart is in req.session.cartId
+	try {
+		const lid = req.params.id;
+		let li = await Lineitem.findById(lid);
 
-    // does the lineitem exist AND is it associated with the correct cartId?
-    if (!li || li.cartId !== req.session.cartId) return res.sendStatus(404)
+		// does the lineitem exist AND is it associated with the correct cartId?
+		if (!li || li.cartId !== req.session.cartId) return res.sendStatus(404);
 
-    li = await li.destroy()
-    res.sendStatus(204)
-  } catch (err) {
-    next(err)
-  }
-})
+		await li.destroy();
+		res.sendStatus(204);
+	} catch (err) {
+		next(err);
+	}
+});

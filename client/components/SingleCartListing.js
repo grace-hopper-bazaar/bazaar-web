@@ -1,41 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { getAllCart, deleteCart, addCart } from '../store/allCart';
+import { connect } from 'react-redux';
+import SingleCartRow from './SingleCartRow'
+import { withRouter } from 'react-router'
+import SubCartTotal from './SubCartTotal'
 
-export default function SingleCartListing(props) {
-	const cart = props.cart;
-	return (
-		<div className="container">
-			<div className="card row">
-				<div className="col">
-					<h3>Product Name</h3>
+class SingleCartListing extends Component {
+	constructor() {
+		super();
+		this.clickHandler = this.clickHandler.bind(this);
+	}
+
+	componentDidMount() {
+		this.props.getAllCart();
+	}
+
+	async clickHandler(event) {
+		event.preventDefault()
+		await this.props.deleteCart(event.target.id);
+	}
+	render() {
+		const cart = this.props.cart
+		return (
+			<div>
+				<div>
+				{cart.map(item => <SingleCartRow cart={item} key={item.id} deleteCart={this.props.deleteCart} addCart={this.props.addCart} />)}
 				</div>
-				<div className="col">
-					<h3>Price</h3>
+				
+				<SubCartTotal cart={cart} />
+				
 				</div>
-				<div className="col">
-					<h3>Quantity</h3>
-				</div>
-        <div className="col">
-					<h3>Remove</h3>
-				</div>
-			</div>
-			{cart.map((item) => (
-				<div className="card row" key={item.id}>
-					<div className="col">
-						<h5>{item.name}</h5>
-					</div>
-					<div className="col">
-						<p> ${item.price}.00 </p>
-					</div>
-					<div className="col">
-          <input type="text" className="form-control" defaultValue={item.quantity} width="20px" />
-					</div>
-          <div className="col">
-					<button type="button" className="badge badge-warning">
-								Remove
-							</button>
-					</div>
-				</div>
-			))}
-		</div>
-	);
+		)
 }
+}
+
+const mapStateToProps = ({ cart }) => ({ cart });
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getAllCart: () => dispatch(getAllCart()),
+		deleteCart: (id) => dispatch(deleteCart(id)),
+		addCart: (item, quant) => dispatch(addCart(item, quant))
+	};
+};
+
+const ConnectedSingleCartListing = withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleCartListing));
+
+export default ConnectedSingleCartListing
