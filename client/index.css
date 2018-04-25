@@ -27,6 +27,29 @@
   display: flex;
 }
 
+#store-name {
+  font-family: 'Sacramento', cursive;
+  font-size: 40px;
+}
+
+#nav-right {
+  position: absolute;
+  right: 10px;
+}
+
+#product-img {
+  /* background-color: black; */
+  text-align: center;
+}
+
+#slider {
+  margin: 0 10px;
+}
+
+.side-cont {
+  width: 200px;
+}
+
 nav {
   height: 80px;
   width: 100%;
@@ -46,14 +69,6 @@ a {
   color: #753ebd;
 }
 
-a:hover {
-  border-bottom: 1px solid;
-}
-
-nav a:first-child:hover {
-  border: none;
-}
-
 .details-image img {
   height: 300px;
 }
@@ -70,9 +85,10 @@ nav a:first-child:hover {
   padding: 10px;
 }
 
-.price-and-cart {
+.bottom {
   display: flex;
   width: 100%;
+  justify-content: space-between;
 }
 
 .sidenav {
@@ -82,8 +98,8 @@ nav a:first-child:hover {
   z-index: 1; /* Stay on top */
   top: 80px; /* Stay at the top */
   left: 0;
-  background-color: lightgray; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
+  background-color: #e9e4f0;
+  overflow-x: visible; /* Disable horizontal scroll */
   padding-top: 20px;
 }
 
@@ -98,4 +114,8 @@ nav a:first-child:hover {
   left: 0;
   width: 100%;
   z-index: 2;
+}
+
+.price {
+  margin-right: 20px;
 }

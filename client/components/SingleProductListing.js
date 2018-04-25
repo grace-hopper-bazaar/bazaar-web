@@ -1,38 +1,40 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import StarRating from './StarRating';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import StarRating from './StarRating'
 
 export default function SingleProductListing(props) {
-	const product = props.product;
+  const product = props.product
 
-	return (
-		<div className="container" id="single-product-container">
-			<div className="card row">
-				<NavLink to={`/product/${product.id}`}>
-					<img className="card-image-top" src={product.image} />
-				</NavLink>
-				<h5 className="card-title">{product.title}</h5>
-				<p className="card-body">{product.description}</p>
-				<StarRating rating={product.rating} showReviewNumber={true} reviews={product.reviews} />
-				<div className="price-and-cart">
-					<div>
-						<p className="card-text">Price: {`$${product.price}.00`}</p>
-					</div>
-
-					<div className="details-and-cart">
-						<NavLink to={`/product/${product.id}`}>
-							<button type="button" className="badge badge-light">
-								More Details
-							</button>
-						</NavLink>
-
-						<button type="button" className="btn btn-primary">
-							{' '}
-							Add To Cart{' '}
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <div id="single-product-container">
+      <div className="card border-warning mb-3">
+        <div className="card-header">
+          <h4 className="card-title">{product.title}</h4>
+        </div>
+        <div className="card-body" id="product-img">
+          <NavLink to={`/product/${product.id}`}>
+            <img className="card-image-top product" src={product.image} />
+          </NavLink>
+        </div>
+        <h5 className="card-text">{product.description}</h5>
+        <p className="card-text price">Price: {`$${product.price}.00`}</p>
+        <div className="bottom">
+          <div id="rating">
+            <StarRating
+              rating={product.rating}
+              showReviewNumber={true}
+              reviews={product.reviews}
+            />
+          </div>
+          <button
+            type="button"
+            className="btn btn-outline-warning"
+            id="single-add">
+            {' '}
+            Add To Cart{' '}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
 }

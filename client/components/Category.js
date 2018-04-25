@@ -32,10 +32,10 @@ class Category extends Component {
   render() {
     return (
       <form>
-        <label htmlFor="filterByCategory">
+        <label className="side-cont">
           <h5>Filter by Category</h5>
         </label>
-        <div className="form-check">
+        <div className="custom-control custom-checkbox side-cont">
           <input
             className="form-check-input"
             type="checkbox"
@@ -46,7 +46,7 @@ class Category extends Component {
           />
           <label className="form-check-label">Milk Chocolate</label>
         </div>
-        <div className="form-check">
+        <div className="custom-control custom-checkbox side-cont">
           <input
             className="form-check-input"
             type="checkbox"
@@ -57,7 +57,7 @@ class Category extends Component {
           />
           <label className="form-check-label">Dark Chocolate</label>
         </div>
-        <div className="form-check">
+        <div className="custom-control custom-checkbox side-cont">
           <input
             className="form-check-input"
             type="checkbox"
