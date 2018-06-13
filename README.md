@@ -38,7 +38,7 @@ npm run deploy
 * [Redux](https://redux.js.org/)
 * [Nodejs](https://nodejs.org/en/) 
 * [Express](https://expressjs.com/)
-* [Mocha](https://mochajs.org/
+* [Mocha](https://mochajs.org/)
 * [Chai](http://www.chaijs.com/)
 * [Bootstrap](https://getbootstrap.com/)
 
