@@ -8,17 +8,12 @@ import SubCartTotal from './SubCartTotal'
 class SingleCartListing extends Component {
 	constructor() {
 		super();
-		this.clickHandler = this.clickHandler.bind(this);
 	}
 
 	componentDidMount() {
 		this.props.getAllCart();
 	}
-
-	async clickHandler(event) {
-		event.preventDefault()
-		await this.props.deleteCart(event.target.id);
-	}
+	
 	render() {
 		const cart = this.props.cart
 		return (
