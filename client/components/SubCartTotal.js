@@ -2,7 +2,6 @@ import React from 'react';
 
 export default function SingleCartListing(props) {
 	const cart = props.cart;
-console.log(cart)
 	const itemsTotal = cart.reduce((acc, curr) => {
 		return acc + curr.price * curr.quantity;
 	}, 0);
