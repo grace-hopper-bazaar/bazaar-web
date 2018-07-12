@@ -31,7 +31,7 @@ class SingleCartListing extends Component {
 				
 				</div>
 		)
-}
+	}
 }
 
 const mapStateToProps = ({ cart }) => ({ cart });
