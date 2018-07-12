@@ -1,6 +1,5 @@
 import React from 'react';
 import SingleCartListing from './SingleCartListing';
-import SubCartTotal from './SubCartTotal';
 
 export default function Cart () {
 	
